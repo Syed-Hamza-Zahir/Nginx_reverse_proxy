@@ -28,8 +28,8 @@ Running the command sudo nginx -t should return no errors according to the guide
 - In this project this process can be been automated so that the reverse proxy is automatically set up when the vm is started
 - This is done by:
   - creating a new_default file with the correct configuration to set up the reverse proxy in the environment/app folder on the local machine
-  - then syncing this folder with a folder in the app vm included with the :
-  `` app.vm.synced_folder "environment/app", "/home/ubuntu/environment" ``
+  - then syncing this folder with a folder in the app vm included with the whole folder already being copied over :
+  `` config.vm.synced_folder ".", "/vagrant" ``
   - in the app provision script using a symbolic link to link the /home/ubuntu/environment folder to a folder in the appropriate location
   ````
   sudo rm /etc/nginx/sites-available/default
@@ -40,4 +40,4 @@ Running the command sudo nginx -t should return no errors according to the guide
   sudo systemctl enable nginx
   
     ````
-
+- We need to make sure that we restart and enable the nginx service for it to take affect
