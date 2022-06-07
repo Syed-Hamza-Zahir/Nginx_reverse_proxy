@@ -25,3 +25,19 @@ location / {
 Running the command sudo nginx -t should return no errors according to the guide: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
 
 # Automating it in the provisions script
+- In this project this process can be been automated so that the reverse proxy is automatically set up when the vm is started
+- This is done by:
+  - creating a new_default file with the correct configuration to set up the reverse proxy in the environment/app folder on the local machine
+  - then syncing this folder with a folder in the app vm included with the :
+  `` app.vm.synced_folder "environment/app", "/home/ubuntu/environment" ``
+  - in the app provision script using a symbolic link to link the /home/ubuntu/environment folder to a folder in the appropriate location
+  ````
+  sudo rm /etc/nginx/sites-available/default
+  sudo ln -s /vagrant/new_default /etc/nginx/sites-available /default
+
+  sudo systemctl stop nginx
+  sudo systemctl start nginx
+  sudo systemctl enable nginx
+  
+    ````
+
